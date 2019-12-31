@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col">
+    <div ngbDropdown class="d-inline-block">
+      <select type="number" [(ngModel)]="selectedValue" (change)="getUser(selectedValue)">
+        <option [ngValue]="undefined" disabled selected> Please select one user </option>
+        <option *ngFor="let userid of UsersId" [ngValue]="userid">{{userid}}</option>
+      </select>
+    </div>
+
+    <div class="form form-group">
+      <br />
+      <div class="form-field">
+        <label *ngIf="displayUsernameError" style="color:red">Username can not containt first name or last name</label>
+        <input name="username" class="form-control" id="username" placeholder="Username" [(ngModel)]="username" (focusout)="onFocusOut()" (ngModelChange)="modified()" />
+      </div>
+      <br />
+      <div class="form-field">
+        <input name="firstname" class="form-control" id="firstname" placeholder="FirstName" [(ngModel)]="firstname" (ngModelChange)="modified()" />
+      </div>
+      <br />
+      <div class="form-field">
+        <input name="lastname" class="form-control" id="lastname" placeholder="LastName" [(ngModel)]="lastname" />
+      </div>
+      <br />
+      <mat-form-field [floatLabel]="'never'">
+        <mat-placeholder *ngIf="!input.value">Date of Birth</mat-placeholder>
+        <input #input matInput [matDatepicker]="picker" [(ngModel)]="dateOfBirth" (ngModelChange)="modified()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <br />
+      <div class="form-field">
+        <button (click)="submitUser()">Submit</button>
+        <br />
+        <label *ngIf="displayResponseMessage" [ngStyle]="{'color': getColor() }">{{responseMessage.message}}</label>
+      </div>
+    </div>
+  </div>
+</div>
